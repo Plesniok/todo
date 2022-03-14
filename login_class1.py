@@ -41,4 +41,18 @@ class login_menu():
         self.connection.commit()
         print(f"witaj: {new_username}!")
     
+    ### nie wiem czemu wczesniej cursor
+    # w argumencie działał, a w tym przypadku nie działa
     
+    def register_valid(self, new_username):
+        """funkcja zwraca None, jeśli nie ma duplikatów,
+        False jeśli występują"""
+        cursor = self.connection.cursor()
+        query = f"SELECT username FROM users WHERE username = '{new_username}';"
+        cursor.execute(query)
+        #### checking/reverse of login
+        for username in cursor:
+            print(username)
+            if username[0] != None:
+                print("valid")
+                return False
