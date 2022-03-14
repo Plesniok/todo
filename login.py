@@ -6,6 +6,6 @@ login_window = login_menu()
 
 #print(login_window.log_in("Plesniok", "adminadmin"))
 
-#print(login_window.register("Plesniok", "adminadmin"))
+print(login_window.register("Plesniok123", "adminadmin"))
 
-print(login_window.register_valid("daasdd"))
+#print(login_window.register_valid("dad"))

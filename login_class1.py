@@ -31,19 +31,6 @@ class login_menu():
             else:
                 return(username)
     
-    def register(self, new_username, new_password, cursor = cursor):
-        """funkcja wprowadza dane użytkownika do bazy danych
-        oraz printuje jeśli się udało"""
-        insertQuery = "INSERT INTO users(username, password) VALUES (%(username)s, %(password)s);"
-        insert_data = {'username' : new_username, 'password' : new_password}
-        cursor.execute(insertQuery, insert_data)
-
-        self.connection.commit()
-        print(f"witaj: {new_username}!")
-    
-    ### nie wiem czemu wczesniej cursor
-    # w argumencie działał, a w tym przypadku nie działa
-    
     def register_valid(self, new_username):
         """funkcja zwraca None, jeśli nie ma duplikatów,
         False jeśli występują"""
@@ -52,7 +39,21 @@ class login_menu():
         cursor.execute(query)
         #### checking/reverse of login
         for username in cursor:
-            print(username)
             if username[0] != None:
-                print("valid")
                 return False
+    
+    def register(self, new_username, new_password,register_valid = register_valid,cursor = cursor):
+        """funkcja wprowadza dane użytkownika do bazy danych
+        oraz printuje jeśli się udało"""
+        if register_valid(self, new_username) == False:
+            print("niestety uzytkownik o podanej nazwie juz istnieje")
+        else:
+            insertQuery = "INSERT INTO users(username, password) VALUES (%(username)s, %(password)s);"
+            insert_data = {'username' : new_username, 'password' : new_password}
+            cursor.execute(insertQuery, insert_data)
+
+            self.connection.commit()
+            print(f"witaj: {new_username}!")
+    
+    ### nie wiem czemu wczesniej cursor
+    # w argumencie działał, a w tym przypadku nie działa
