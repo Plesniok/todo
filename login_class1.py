@@ -30,3 +30,15 @@ class login_menu():
                 return False
             else:
                 return(username)
+    
+    def register(self, new_username, new_password, cursor = cursor):
+        """funkcja wprowadza dane użytkownika do bazy danych
+        oraz printuje jeśli się udało"""
+        insertQuery = "INSERT INTO users(username, password) VALUES (%(username)s, %(password)s);"
+        insert_data = {'username' : new_username, 'password' : new_password}
+        cursor.execute(insertQuery, insert_data)
+
+        self.connection.commit()
+        print(f"witaj: {new_username}!")
+    
+    
