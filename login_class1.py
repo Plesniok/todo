@@ -21,5 +21,12 @@ class login_menu():
             print(line)
     
     def log_in(self, username, password, cursor = cursor):
+        """funkcja zwraca nazwe użytkownika jeśli istnieje"""
         query = f"SELECT id FROM users WHERE username = '{username}' AND password = '{password}';"
         cursor.execute(query)
+        #### checking
+        for id in cursor:
+            if id[0] == None:
+                return False
+            else:
+                return(username)
