@@ -29,7 +29,9 @@ class login_menu():
             if id[0] == None:
                 return False
             else:
-                return(username)
+                print(f"witaj: {username}!")
+                return True
+
     
     def register_valid(self, new_username):
         """funkcja zwraca None, jeśli nie ma duplikatów,
@@ -54,6 +56,7 @@ class login_menu():
 
             self.connection.commit()
             print(f"witaj: {new_username}!")
+            return True
     
     ### nie wiem czemu wczesniej cursor
     # w argumencie działał, a w tym przypadku nie działa
