@@ -1,29 +1,16 @@
-from login_class1 import login_menu
+
 
 def login_menu_f():
+    from login_class1 import login_menu
     login_window = login_menu()
     while True:
         declaration = input("1.login \n2.register\nq, aby zakończyć\n")
         if declaration == "1":
-            while True:
-                input_user = input("podaj nazwę użytkownika\n")
-                input_password = input("podaj hasło\n")
+            return login_window.log_in()
                 
-                condition = (login_window.log_in(input_user, input_password))
-                if condition == True:
-                    return input_user
-                else:
-                    print("błędne dane\n")
         elif declaration == "2":
             while True:
-                input_user = input("podaj nazwę użytkownika\n")
-                input_password = input("podaj hasło\n")
-                
-                condition = (login_window.register(input_user, input_password))
-                if condition == True:
-                    return input_user
-                else:
-                    print("użytkownik o podanej nazwie już istnieje\n")
+                return login_window.register()
         elif declaration == "q":
             break
         else:

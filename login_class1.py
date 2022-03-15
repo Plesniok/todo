@@ -20,17 +20,22 @@ class login_menu():
         for line in cursor:
             print(line)
     
-    def log_in(self, username, password, cursor = cursor):
+    def log_in(self, cursor = cursor):
         """funkcja zwraca nazwe użytkownika jeśli istnieje"""
-        query = f"SELECT id FROM users WHERE username = '{username}' AND password = '{password}';"
-        cursor.execute(query)
-        #### checking
-        for id in cursor:
-            if id[0] == None:
-                return False
-            else:
-                print(f"witaj: {username}!")
-                return True
+        while True:
+            username = input("podaj nazwę użytkownika\n")
+            password = input("podaj hasło\n")
+            
+            query = f"SELECT id FROM users WHERE username = '{username}' AND password = '{password}';"
+            cursor.execute(query)
+            #### checking
+            for id in cursor:
+                if id[0] == None:
+                    return False
+                else:
+                    print(f"witaj: {username}!")
+                    return True
+            print("błędne dane użytkownika")
 
     
     def register_valid(self, new_username):
@@ -44,19 +49,22 @@ class login_menu():
             if username[0] != None:
                 return False
     
-    def register(self, new_username, new_password,register_valid = register_valid,cursor = cursor):
+    def register(self,register_valid = register_valid,cursor = cursor):
         """funkcja wprowadza dane użytkownika do bazy danych
         oraz printuje jeśli się udało"""
-        if register_valid(self, new_username) == False:
-            print("niestety uzytkownik o podanej nazwie juz istnieje")
-        else:
-            insertQuery = "INSERT INTO users(username, password) VALUES (%(username)s, %(password)s);"
-            insert_data = {'username' : new_username, 'password' : new_password}
-            cursor.execute(insertQuery, insert_data)
+        while True:
+            new_username = input("podaj nazwę użytkownika\n")
+            new_password = input("podaj hasło\n")
+            if register_valid(self, new_username) == False:
+                print("niestety uzytkownik o podanej nazwie juz istnieje")
+            else:
+                insertQuery = "INSERT INTO users(username, password) VALUES (%(username)s, %(password)s);"
+                insert_data = {'username' : new_username, 'password' : new_password}
+                cursor.execute(insertQuery, insert_data)
 
-            self.connection.commit()
-            print(f"witaj: {new_username}!")
-            return True
+                self.connection.commit()
+                print(f"witaj: {new_username}!")
+                return True
     
     ### nie wiem czemu wczesniej cursor
     # w argumencie działał, a w tym przypadku nie działa
